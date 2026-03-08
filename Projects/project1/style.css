@@ -1,0 +1,166 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+html,body{
+    height:100%;
+    width: 100%;
+}
+
+#main{
+    height: 100%;
+    width: 100%;
+}
+
+#header{
+    height: 10%;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    position: fixed;
+    z-index: 1;
+}
+
+#headerContent{
+
+    font-weight: bolder;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgb(3, 3, 70);
+    height: 80%;
+    width: 8%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+#Icone{
+     font-weight: bolder;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgb(3, 3, 70);
+    height: 50%;
+    width: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#headerContent img{
+    height: 80%;
+    object-fit: cover;
+    margin-left: 15px;
+}
+
+#headerContent:hover{
+    color:rgb(34, 34, 224) ;
+}
+
+#Icone:hover{
+    color:rgb(34, 34, 224) ;
+}
+
+
+
+.contectNo{
+    margin-left: 100px;
+    text-align: left;
+    font-weight: normal;
+    font-size: 15px;
+
+
+}
+
+.serchIcon{
+    color:rgb(129, 129, 202) ;
+    margin-left: 10px;
+}
+
+.serchIcon:hover{
+    background-color: rgb(148, 209, 189);
+}
+
+.global:hover{
+    background-color: rgb(148, 209, 189);
+}
+
+.login{
+    margin-left: 20px;
+}
+
+#tryForFree{
+    height: 40%;
+    width: 8%;
+    margin-top: 1%;
+    background-color: rgb(6, 117, 2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#tryForFree:hover{
+    background-color:rgb(3, 49, 1) ;
+}
+
+#fakeHeader{
+    height: 0%;
+    width: 100%;
+}
+
+#page1{
+    height: 100%;
+    width: 100%;
+    background-image: -webkit-image-set(url("https://wp.sfdcdigital.com/en-in/wp-content/uploads/sites/21/2025/08/Frame-2-1-1.png?resize=1536,533"));
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#bigBox{
+    height: 80%;
+    width: 40%;
+    margin-top: 100px;
+    /* display: flex;
+    border-radius: 10px; */
+
+}
+
+#bigBox h1{
+    color: rgb(27, 27, 146);
+    font-size: 50px;
+}
+
+#bigBox h2{
+    color: rgb(3, 129, 231);
+    font-size: 50px;
+}
+
+#vidioBox{
+    height: 100px;
+    width: 20%;
+    /* background-color: rgb(0, 252, 235); */
+    overflow: hidden;
+    
+}
+
+.back-video{
+    position: absolute;
+    top: 15%;
+    height: 60%;
+    width: 20%;
+    object-fit: cover;
+    border-radius: 10%;
+
+}
+
+#page2{
+    height: 90%;
+    width: 100%;
+    background-color: lightgreen;
+}

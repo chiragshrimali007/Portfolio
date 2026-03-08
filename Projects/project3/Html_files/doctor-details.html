@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- SEO: title and description are set dynamically by JS -->
+  <title>Doctor Profile – KSC General & Dental Hospital, Jodhpur</title>
+  <meta name="description" content="View full doctor profile, qualifications, experience, and availability at KSC General & Dental Hospital, Mandore, Jodhpur." />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph (updated dynamically) -->
+  <meta property="og:type" content="profile" />
+  <meta property="og:site_name" content="KSC General & Dental Hospital" />
+
+  <!-- ── Same fonts as main site ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ================================================================
+       CSS CUSTOM PROPERTIES — identical to ksc-hospital.html
+    ================================================================ */
+    :root {
+      --navy:      #0a2540;
+      --blue:      #1a6dbc;
+      --sky:       #2897d4;
+      --teal:      #0fbfa1;
+      --teal-lt:   #e6faf7;
+      --white:     #ffffff;
+      --off-white: #f4f8fc;
+      --gray-lt:   #e8eef6;
+      --gray:      #8a9ab5;
+      --gray-dk:   #4a5568;
+      --text:      #1a2535;
+      --gold:      #f5a623;
+      --shadow-sm: 0 2px 12px rgba(10,37,64,.08);
+      --shadow-md: 0 8px 32px rgba(10,37,64,.12);
+      --shadow-lg: 0 20px 60px rgba(10,37,64,.16);
+      --radius:    14px;
+      --radius-lg: 24px;
+      --transition: .3s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ================================================================
+       RESET & BASE — identical to ksc-hospital.html
+    ================================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.65;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    h1, h2, h3, h4 { font-family: 'DM Serif Display', serif; line-height: 1.2; }
+    h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+    h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); }
+    h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+    p { color: var(--gray-dk); }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Shared button styles ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 50px;
+      font-weight: 600; font-size: .95rem;
+      transition: var(--transition); cursor: pointer;
+      font-family: 'DM Sans', sans-serif; border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue), var(--sky));
+      color: var(--white); box-shadow: 0 4px 20px rgba(26,109,188,.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(26,109,188,.45); }
+    .btn-teal {
+      background: linear-gradient(135deg, var(--teal), #0ad4b4);
+      color: var(--white); box-shadow: 0 4px 20px rgba(15,191,161,.35);
+    }
+    .btn-teal:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(15,191,161,.45); }
+
+    /* ── Section label (same as main site) ── */
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: .8rem; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 12px;
+    }
+    .section-label::before {
+      content: ''; display: block; width: 24px; height: 2px;
+      background: var(--teal); border-radius: 2px;
+    }
+
+    /* ================================================================
+       PAGE LOADER
+    ================================================================ */
+    #page-loader {
+      position: fixed; inset: 0;
+      background: var(--navy);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 9999;
+      transition: opacity .5s ease, visibility .5s ease;
+    }
+    #page-loader.hidden { opacity: 0; visibility: hidden; }
+    .loader-cross {
+      width: 56px; height: 56px; position: relative; margin-bottom: 16px;
+    }
+    .loader-cross span {
+      position: absolute; background: var(--teal);
+      border-radius: 4px; animation: loaderPulse 1.4s ease-in-out infinite;
+    }
+    .loader-cross span:nth-child(1) {
+      width: 18px; height: 56px; left: 50%; transform: translateX(-50%);
+    }
+    .loader-cross span:nth-child(2) {
+      height: 18px; width: 56px; top: 50%; transform: translateY(-50%);
+    }
+    @keyframes loaderPulse {
+      0%, 100% { opacity: 1; } 50% { opacity: .35; }
+    }
+    .loader-text {
+      color: rgba(255,255,255,.7); font-size: .82rem;
+      letter-spacing: .1em; animation: loaderPulse 1.4s ease-in-out infinite .2s;
+    }
+
+    /* ================================================================
+       TOP MINI-NAVBAR  (same visual language as main site)
+    ================================================================ */
+    #mini-nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 500;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-lt);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .mini-nav-inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 24px;
+      height: 64px; display: flex; align-items: center;
+      justify-content: space-between; gap: 12px;
+    }
+    .mini-nav-logo {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .mini-nav-logo-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+      border-radius: 10px; display: flex;
+      align-items: center; justify-content: center;
+      color: white; font-size: 1rem; flex-shrink: 0;
+    }
+    .mini-nav-logo strong {
+      font-family: 'DM Serif Display', serif;
+      font-size: .95rem; color: var(--navy);
+    }
+    .mini-nav-logo span {
+      display: block; font-size: .68rem;
+      color: var(--teal); font-weight: 600; letter-spacing: .04em;
+    }
+    .mini-nav-links {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .mini-nav-links a {
+      padding: 7px 14px; border-radius: 8px;
+      font-weight: 500; font-size: .88rem;
+      color: var(--gray-dk); transition: var(--transition);
+    }
+    .mini-nav-links a:hover { color: var(--blue); background: rgba(26,109,188,.07); }
+    .mini-nav-back {
+      display: flex; align-items: center; gap: 6px;
+      color: var(--blue); font-weight: 600;
+      font-size: .88rem; transition: var(--transition);
+      padding: 8px 14px; border-radius: 8px;
+      background: rgba(26,109,188,.07);
+    }
+    .mini-nav-back:hover { background: rgba(26,109,188,.14); }
+    .mini-nav-cta {
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    /* ================================================================
+       HERO / DOCTOR HEADER
+    ================================================================ */
+    #doc-hero {
+      padding-top: 64px; /* offset mini-nav */
+      min-height: 420px;
+      background: linear-gradient(145deg, var(--navy) 0%, #0d3561 55%, #0a4d7a 100%);
+      position: relative; overflow: hidden;
+      display: flex; align-items: flex-end;
+    }
+
+    /* Decorative radial glow — same style as main hero */
+    #doc-hero::before {
+      content: '';
+      position: absolute; width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(15,191,161,.13) 0%, transparent 70%);
+      top: -200px; right: -100px; pointer-events: none;
+    }
+    #doc-hero::after {
+      content: '';
+      position: absolute; width: 350px; height: 350px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(40,151,212,.12) 0%, transparent 70%);
+      bottom: -60px; left: -60px; pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative; z-index: 1;
+      width: 100%; padding: 48px 0 0;
+    }
+
+    /* Breadcrumb */
+    .hero-breadcrumb {
+      display: flex; align-items: center; gap: 8px;
+      font-size: .78rem; color: rgba(255,255,255,.55);
+      margin-bottom: 28px;
+    }
+    .hero-breadcrumb a { color: rgba(255,255,255,.55); transition: color .2s; }
+    .hero-breadcrumb a:hover { color: var(--teal); }
+    .hero-breadcrumb i { font-size: .65rem; }
+
+    /* Doctor profile strip */
+    .hero-profile-strip {
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      padding: 36px 40px 0;
+      display: flex; align-items: flex-end;
+      gap: 36px; flex-wrap: wrap;
+    }
+
+    /* Large doctor avatar */
+    .doc-avatar-large {
+      width: 140px; height: 140px; flex-shrink: 0;
+      border-radius: 20px;
+      border: 4px solid rgba(255,255,255,.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; color: white;
+      position: relative; overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,.3);
+      transform: translateY(32px);
+      transition: var(--transition);
+    }
+    .doc-avatar-large:hover { transform: translateY(28px) scale(1.03); }
+
+    /* Department tag on avatar */
+    .doc-avatar-dept {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: rgba(0,0,0,.45);
+      color: white; font-size: .65rem; font-weight: 700;
+      letter-spacing: .06em; text-align: center;
+      padding: 5px; text-transform: uppercase;
+    }
+
+    /* Doctor text info beside avatar */
+    .hero-doc-info {
+      flex: 1; min-width: 240px; padding-bottom: 32px;
+    }
+
+    /* Dept badge pill */
+    .hero-dept-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(15,191,161,.18);
+      border: 1px solid rgba(15,191,161,.4);
+      color: #4ee8cd; padding: 5px 14px;
+      border-radius: 50px; font-size: .75rem;
+      font-weight: 600; letter-spacing: .07em;
+      margin-bottom: 10px;
+    }
+
+    .hero-doc-name {
+      color: var(--white); margin-bottom: 6px;
+    }
+    .hero-doc-qual {
+      color: rgba(255,255,255,.65);
+      font-size: .95rem; margin-bottom: 16px;
+    }
+
+    /* Quick stat pills */
+    .hero-stats-row {
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .hero-stat-pill {
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 50px; padding: 7px 16px;
+      color: rgba(255,255,255,.85); font-size: .82rem;
+      font-weight: 500;
+    }
+    .hero-stat-pill i { color: var(--teal); font-size: .8rem; }
+
+    /* Rating stars in hero */
+    .hero-rating {
+      display: flex; align-items: center; gap: 6px;
+      margin-top: 14px;
+    }
+    .hero-rating .stars-row { color: var(--gold); font-size: .95rem; }
+    .hero-rating span { color: rgba(255,255,255,.6); font-size: .82rem; }
+
+    /* Action buttons row in hero */
+    .hero-action-row {
+      padding-bottom: 32px;
+      display: flex; flex-direction: column;
+      align-items: flex-end; gap: 10px;
+    }
+    .share-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.8);
+      padding: 9px 18px; border-radius: 50px;
+      font-size: .82rem; font-weight: 600;
+      cursor: pointer; transition: var(--transition);
+      font-family: 'DM Sans', sans-serif;
+      position: relative;
+    }
+    .share-btn:hover { background: rgba(255,255,255,.18); color: white; }
+
+    /* Share dropdown */
+    .share-dropdown {
+      position: absolute; top: calc(100% + 8px); right: 0;
+      background: white; border-radius: var(--radius);
+      box-shadow: var(--shadow-lg); padding: 8px 0;
+      min-width: 180px; z-index: 100;
+      display: none;
+      border: 1px solid var(--gray-lt);
+    }
+    .share-btn.open .share-dropdown { display: block; }
+    .share-opt {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px; color: var(--gray-dk);
+      font-size: .85rem; font-weight: 500;
+      transition: background .2s; cursor: pointer;
+      background: none; width: 100%; text-align: left;
+      font-family: 'DM Sans', sans-serif; border: none;
+    }
+    .share-opt:hover { background: var(--off-white); color: var(--navy); }
+    .share-opt i { width: 16px; text-align: center; color: var(--blue); }
+
+    /* Wave divider at bottom of hero */
+    .hero-wave {
+      position: absolute; bottom: -1px; left: 0; right: 0;
+      overflow: hidden; line-height: 0;
+    }
+    .hero-wave svg { display: block; width: 100%; }
+
+    /* ================================================================
+       STICKY APPOINTMENT BUTTON (right side of screen)
+    ================================================================ */
+    #sticky-appt {
+      position: fixed;
+      right: -120px; /* starts off-screen */
+      top: 50%; transform: translateY(-50%);
+      background: linear-gradient(135deg, var(--teal), #0ad4b4);
+      color: white; font-weight: 700; font-size: .82rem;
+      padding: 14px 12px;
+      border-radius: 12px 0 0 12px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      letter-spacing: .06em;
+      cursor: pointer; z-index: 400;
+      box-shadow: -4px 0 20px rgba(15,191,161,.4);
+      transition: right .4s ease, box-shadow var(--transition);
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'DM Sans', sans-serif; border: none;
+    }
+    #sticky-appt.visible { right: 0; }
+    #sticky-appt:hover {
+      box-shadow: -6px 0 28px rgba(15,191,161,.55);
+    }
+    #sticky-appt i { font-size: 1rem; transform: rotate(90deg); }
+
+    /* ================================================================
+       MAIN CONTENT LAYOUT — 2-column grid
+    ================================================================ */
+    .doc-content-wrap {
+      background: var(--off-white);
+      padding: 60px 0 80px;
+    }
+    .doc-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ================================================================
+       LEFT COLUMN: PROFILE SECTIONS
+    ================================================================ */
+    .doc-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-lt);
+      margin-bottom: 24px;
+      animation: fadeUp .6s ease both;
+    }
+    .doc-card:nth-child(1) { animation-delay: .1s; }
+    .doc-card:nth-child(2) { animation-delay: .2s; }
+    .doc-card:nth-child(3) { animation-delay: .3s; }
+    .doc-card:nth-child(4) { animation-delay: .4s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .doc-card-title {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem; color: var(--navy);
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--gray-lt);
+    }
+    .doc-card-title i {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, rgba(26,109,188,.1), rgba(15,191,161,.1));
+      border-radius: 10px; display: flex;
+      align-items: center; justify-content: center;
+      color: var(--blue); font-size: .9rem; flex-shrink: 0;
+    }
+
+    /* ── About / Bio section ── */
+    .doc-bio-text {
+      font-size: .95rem; line-height: 1.8;
+      color: var(--gray-dk);
+    }
+    .doc-bio-text + .doc-bio-text { margin-top: 12px; }
+
+    /* ── Professional details grid ── */
+    .prof-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+    .prof-item {
+      background: var(--off-white);
+      border-radius: var(--radius);
+      padding: 18px 16px;
+      transition: var(--transition);
+    }
+    .prof-item:hover {
+      background: var(--teal-lt);
+      transform: translateY(-2px);
+    }
+    .prof-item-label {
+      font-size: .73rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 5px;
+    }
+    .prof-item-value {
+      font-size: .92rem; font-weight: 600; color: var(--navy);
+      font-family: 'DM Serif Display', serif;
+    }
+
+    /* ── Certifications / education pills ── */
+    .cert-pills {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px;
+    }
+    .cert-pill {
+      background: rgba(26,109,188,.08);
+      border: 1px solid rgba(26,109,188,.2);
+      color: var(--blue); padding: 6px 14px;
+      border-radius: 50px; font-size: .82rem;
+      font-weight: 600; display: flex;
+      align-items: center; gap: 6px;
+    }
+    .cert-pill i { font-size: .75rem; }
+
+    /* ── Availability schedule ── */
+    .avail-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    }
+    .avail-item {
+      background: var(--navy);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+    }
+    .avail-item .day {
+      font-size: .75rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,255,255,.55); margin-bottom: 5px;
+    }
+    .avail-item .time {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.05rem; color: var(--teal);
+    }
+    .avail-note {
+      display: flex; align-items: center; gap: 8px;
+      margin-top: 14px; font-size: .82rem; color: var(--gray-dk);
+    }
+    .avail-note i { color: var(--gold); }
+
+    /* ── Certificate gallery (gated after form) ── */
+    .certs-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 14px;
+    }
+    .cert-gallery-item {
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      cursor: zoom-in;
+      transition: var(--transition);
+      aspect-ratio: 3/4;
+      box-shadow: var(--shadow-sm);
+    }
+    .cert-gallery-item:hover {
+      transform: scale(1.04);
+      box-shadow: var(--shadow-md);
+      z-index: 2;
+    }
+    .cert-tile {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 10px; position: relative;
+    }
+    .cert-tile i { font-size: 2.2rem; color: rgba(255,255,255,.85); position: relative; z-index: 1; }
+    .cert-tile-label {
+      font-size: .72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .07em;
+      color: rgba(255,255,255,.8); text-align: center;
+      padding: 0 10px; position: relative; z-index: 1;
+    }
+    .cert-tile-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,.15); z-index: 0;
+    }
+    /* Hover expand icon */
+    .cert-zoom-icon {
+      position: absolute; top: 8px; right: 8px;
+      background: rgba(255,255,255,.2);
+      border-radius: 6px; padding: 5px 6px;
+      color: white; font-size: .7rem;
+      opacity: 0; transition: opacity .2s;
+      z-index: 2;
+    }
+    .cert-gallery-item:hover .cert-zoom-icon { opacity: 1; }
+
+    /* Certificate lightbox */
+    #cert-lightbox {
+      position: fixed; inset: 0;
+      background: rgba(10,37,64,.88);
+      backdrop-filter: blur(8px);
+      z-index: 3000;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: opacity .3s ease, visibility .3s ease;
+    }
+    #cert-lightbox.open { opacity: 1; visibility: visible; }
+    .lightbox-content {
+      background: white; border-radius: var(--radius-lg);
+      padding: 24px; max-width: 480px; width: 90%;
+      text-align: center;
+      transform: scale(.9);
+      transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+    }
+    #cert-lightbox.open .lightbox-content { transform: scale(1); }
+    .lightbox-tile {
+      width: 100%; aspect-ratio: 3/4;
+      border-radius: var(--radius);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 14px; margin-bottom: 16px;
+    }
+    .lightbox-tile i { font-size: 4rem; color: rgba(255,255,255,.9); }
+    .lightbox-tile-label {
+      font-size: .9rem; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      color: rgba(255,255,255,.85);
+    }
+    .lightbox-close {
+      position: absolute; top: 16px; right: 16px;
+      width: 38px; height: 38px;
+      background: rgba(255,255,255,.1);
+      border-radius: 50%; color: white;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: .9rem;
+      transition: background .2s; border: none;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,.25); }
+    #cert-lightbox { position: fixed; } /* ensure stacking */
+    .lightbox-caption {
+      font-size: .88rem; color: var(--gray-dk); margin-top: 0;
+    }
+
+    /* ================================================================
+       RIGHT COLUMN: SIDEBAR
+    ================================================================ */
+    .doc-sidebar { position: sticky; top: 80px; }
+
+    .sidebar-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-lt);
+      overflow: hidden;
+      margin-bottom: 20px;
+      animation: fadeUp .6s ease both;
+    }
+    .sidebar-card:nth-child(1) { animation-delay: .15s; }
+    .sidebar-card:nth-child(2) { animation-delay: .25s; }
+    .sidebar-card:nth-child(3) { animation-delay: .35s; }
+
+    /* Appointment sidebar card */
+    .appt-card-header {
+      background: linear-gradient(135deg, var(--navy), #0d3561);
+      padding: 22px 24px;
+    }
+    .appt-card-header h4 {
+      font-family: 'DM Serif Display', serif;
+      color: white; font-size: 1.05rem; margin-bottom: 4px;
+    }
+    .appt-card-header p { color: rgba(255,255,255,.65); font-size: .82rem; margin: 0; }
+    .appt-card-body { padding: 20px 24px; }
+
+    .appt-btn-full {
+      display: flex; align-items: center; justify-content: center;
+      gap: 9px; width: 100%; padding: 14px;
+      background: linear-gradient(135deg, var(--teal), #0ad4b4);
+      color: white; border-radius: 10px;
+      font-weight: 700; font-size: .95rem;
+      cursor: pointer; transition: var(--transition);
+      font-family: 'DM Sans', sans-serif; border: none;
+      margin-bottom: 10px; text-decoration: none;
+    }
+    .appt-btn-full:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(15,191,161,.4); }
+
+    .appt-btn-call {
+      display: flex; align-items: center; justify-content: center;
+      gap: 9px; width: 100%; padding: 13px;
+      background: linear-gradient(135deg, var(--blue), var(--sky));
+      color: white; border-radius: 10px;
+      font-weight: 600; font-size: .9rem;
+      cursor: pointer; transition: var(--transition);
+      font-family: 'DM Sans', sans-serif; border: none;
+      text-decoration: none;
+    }
+    .appt-btn-call:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,109,188,.4); }
+
+    /* Sidebar rating card */
+    .rating-card-body { padding: 22px 24px; }
+    .rating-card-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem; color: var(--navy);
+      margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .rating-card-title i { color: var(--gold); }
+
+    .rating-big {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+    }
+    .rating-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3rem; color: var(--navy); line-height: 1;
+    }
+    .stars-row i { color: var(--gold); font-size: .95rem; }
+    .rating-count { font-size: .78rem; color: var(--gray); }
+
+    .rating-bars { display: flex; flex-direction: column; gap: 6px; }
+    .rating-bar-row {
+      display: flex; align-items: center; gap: 8px; font-size: .78rem;
+    }
+    .rb-label { width: 20px; color: var(--gray-dk); font-weight: 600; text-align: right; }
+    .rb-track {
+      flex: 1; height: 6px; background: var(--gray-lt);
+      border-radius: 10px; overflow: hidden;
+    }
+    .rb-fill {
+      height: 100%; border-radius: 10px;
+      background: linear-gradient(90deg, var(--gold), #f7c948);
+      transition: width 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    .rb-count { width: 20px; color: var(--gray); text-align: left; }
+
+    /* Sidebar info card */
+    .info-list-item {
+      display: flex; align-items: flex-start;
+      gap: 12px; padding: 10px 0;
+      border-bottom: 1px solid var(--gray-lt);
+      font-size: .85rem;
+    }
+    .info-list-item:last-child { border-bottom: none; }
+    .info-list-item i {
+      color: var(--teal); margin-top: 2px; flex-shrink: 0; font-size: .9rem;
+    }
+    .info-list-item strong { display: block; color: var(--navy); font-size: .78rem; margin-bottom: 2px; }
+    .info-list-item span { color: var(--gray-dk); }
+
+    /* ================================================================
+       DOCTOR NAVIGATION SWITCHER
+    ================================================================ */
+    .doc-nav-section {
+      background: var(--navy);
+      padding: 40px 0;
+    }
+    .doc-nav-inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 24px;
+    }
+    .doc-nav-label {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem; color: white;
+      margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+    }
+    .doc-nav-label i { color: var(--teal); }
+
+    /* Scrollable doctor thumbs strip */
+    .doc-thumbs-strip {
+      display: flex; gap: 16px; overflow-x: auto;
+      padding-bottom: 8px; scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,.2) transparent;
+    }
+    .doc-thumbs-strip::-webkit-scrollbar { height: 4px; }
+    .doc-thumbs-strip::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,.2); border-radius: 4px;
+    }
+
+    .doc-thumb {
+      flex-shrink: 0; width: 200px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius);
+      padding: 16px; cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none; display: block;
+    }
+    .doc-thumb:hover {
+      background: rgba(255,255,255,.12);
+      border-color: rgba(15,191,161,.4);
+      transform: translateY(-3px);
+    }
+    .doc-thumb.active {
+      background: rgba(15,191,161,.15);
+      border-color: var(--teal);
+    }
+    .doc-thumb-avatar {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; color: white;
+      margin-bottom: 12px; flex-shrink: 0;
+    }
+    .doc-thumb-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: .9rem; color: white; margin-bottom: 3px;
+      line-height: 1.2;
+    }
+    .doc-thumb-spec {
+      font-size: .72rem; color: rgba(255,255,255,.55);
+    }
+    .doc-thumb-active-pill {
+      display: inline-block; margin-top: 7px;
+      background: var(--teal); color: white;
+      font-size: .68rem; font-weight: 700;
+      padding: 3px 9px; border-radius: 50px;
+    }
+
+    /* Prev / Next arrows */
+    .doc-nav-arrows {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 16px;
+    }
+    .doc-nav-arrow {
+      display: flex; align-items: center; gap: 8px;
+      color: rgba(255,255,255,.7); font-size: .88rem;
+      font-weight: 600; cursor: pointer;
+      transition: color .2s; background: none;
+      border: none; font-family: 'DM Sans', sans-serif;
+    }
+    .doc-nav-arrow:hover { color: var(--teal); }
+    .doc-nav-arrow:disabled { opacity: .3; cursor: not-allowed; }
+    .doc-nav-arrow i { font-size: 1rem; }
+    .doc-nav-counter {
+      font-size: .82rem; color: rgba(255,255,255,.45);
+    }
+
+    /* ================================================================
+       FOOTER MINI — same look as main site footer
+    ================================================================ */
+    .mini-footer {
+      background: var(--navy); padding: 28px 0;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .mini-footer-inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 24px;
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+    .mini-footer-brand {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .mini-footer-brand strong {
+      font-family: 'DM Serif Display', serif;
+      color: white; font-size: .95rem;
+    }
+    .mini-footer-brand span { font-size: .75rem; color: rgba(255,255,255,.5); }
+    .mini-footer-links { display: flex; gap: 20px; }
+    .mini-footer-links a {
+      font-size: .82rem; color: rgba(255,255,255,.5);
+      transition: color .2s;
+    }
+    .mini-footer-links a:hover { color: var(--teal); }
+    .mini-footer-copy { font-size: .78rem; color: rgba(255,255,255,.35); }
+
+    /* ================================================================
+       TOAST  (same as main site)
+    ================================================================ */
+    #toast {
+      position: fixed; bottom: 30px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--teal); color: white;
+      padding: 14px 28px; border-radius: 50px;
+      font-weight: 600; font-size: .92rem;
+      box-shadow: var(--shadow-md); z-index: 5000;
+      transition: transform .4s ease;
+      display: flex; align-items: center; gap: 8px;
+      white-space: nowrap;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ================================================================
+       SCROLL-REVEAL ANIMATION CLASS (same as main site)
+    ================================================================ */
+    [data-reveal] {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    [data-reveal].revealed { opacity: 1; transform: translateY(0); }
+
+    /* ================================================================
+       NOT FOUND / ERROR STATE
+    ================================================================ */
+    #not-found {
+      display: none; min-height: 60vh;
+      align-items: center; justify-content: center;
+      flex-direction: column; text-align: center;
+      padding: 80px 24px;
+    }
+    #not-found.show { display: flex; }
+    #not-found i { font-size: 4rem; color: var(--gray-lt); margin-bottom: 20px; }
+    #not-found h2 { color: var(--navy); margin-bottom: 10px; }
+    #not-found p { max-width: 400px; }
+
+    /* ================================================================
+       RESPONSIVE
+    ================================================================ */
+    @media (max-width: 1024px) {
+      .doc-grid { grid-template-columns: 1fr; }
+      .doc-sidebar { position: static; }
+      .hero-action-row { align-items: flex-start; flex-direction: row; }
+    }
+    @media (max-width: 768px) {
+      .hero-profile-strip { padding: 24px 20px 0; gap: 20px; }
+      .doc-avatar-large { width: 100px; height: 100px; font-size: 2.8rem; transform: translateY(20px); }
+      .mini-nav-links { display: none; }
+      .avail-grid { grid-template-columns: 1fr; }
+      .hero-action-row { padding-bottom: 20px; }
+      .prof-grid { grid-template-columns: 1fr 1fr; }
+      .doc-card { padding: 24px 20px; }
+      #sticky-appt { display: none; }
+      .hero-doc-info { padding-bottom: 20px; }
+    }
+    @media (max-width: 480px) {
+      .hero-stats-row { gap: 6px; }
+      .hero-stat-pill { padding: 6px 10px; font-size: .76rem; }
+      .prof-grid { grid-template-columns: 1fr; }
+      .certs-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .mini-footer-inner { flex-direction: column; text-align: center; }
+      .mini-footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ================================================================
+     PAGE LOADER
+================================================================ -->
+<div id="page-loader">
+  <div class="loader-cross"><span></span><span></span></div>
+  <div class="loader-text">KSC HOSPITAL &nbsp;•&nbsp; LOADING PROFILE</div>
+</div>
+
+<!-- ================================================================
+     MINI NAVBAR
+================================================================ -->
+<nav id="mini-nav">
+  <div class="mini-nav-inner">
+    <a href="index.html" class="mini-nav-logo">
+      <div class="mini-nav-logo-icon"><i class="fas fa-heartbeat"></i></div>
+      <div>
+        <strong>KSC General & Dental</strong>
+        <span>Hospital &bull; Est. 2016 &bull; Jodhpur</span>
+      </div>
+    </a>
+
+    <div class="mini-nav-links">
+      <a href="index.html#about">About</a>
+      <a href="index.html#dental">Dental</a>
+      <a href="index.html#general">General</a>
+      <a href="index.html#contact">Appointment</a>
+    </div>
+
+    <div class="mini-nav-cta">
+      <a href="index.html#doctors" class="mini-nav-back">
+        <i class="fas fa-arrow-left"></i> All Doctors
+      </a>
+      <a href="tel:+919462844444" class="btn btn-primary" style="padding:10px 20px; font-size:.85rem;">
+        <i class="fas fa-phone"></i> Call Now
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================================================================
+     DOCTOR HERO HEADER
+     (populated dynamically by renderDoctor())
+================================================================ -->
+<section id="doc-hero">
+  <div class="container hero-inner">
+
+    <!-- Breadcrumb -->
+    <div class="hero-breadcrumb">
+      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <i class="fas fa-chevron-right"></i>
+      <a href="index.html#doctors">Our Doctors</a>
+      <i class="fas fa-chevron-right"></i>
+      <span id="hero-breadcrumb-name">Doctor Profile</span>
+    </div>
+
+    <!-- Profile strip -->
+    <div class="hero-profile-strip">
+
+      <!-- Avatar -->
+      <div class="doc-avatar-large" id="hero-avatar">
+        <i class="fas fa-user-md" id="hero-avatar-icon"></i>
+        <div class="doc-avatar-dept" id="hero-avatar-dept">Department</div>
+      </div>
+
+      <!-- Info -->
+      <div class="hero-doc-info">
+        <div class="hero-dept-badge" id="hero-dept-badge">
+          <i class="fas fa-stethoscope"></i>
+          <span id="hero-dept-text">Department</span>
+        </div>
+        <h1 class="hero-doc-name" id="hero-name">Loading…</h1>
+        <p class="hero-doc-qual" id="hero-qual"></p>
+        <div class="hero-stats-row" id="hero-stats-row"></div>
+        <div class="hero-rating">
+          <div class="stars-row" id="hero-stars"></div>
+          <span id="hero-rating-text"></span>
+        </div>
+      </div>
+
+      <!-- Action area -->
+      <div class="hero-action-row">
+        <!-- Share button with dropdown -->
+        <div class="share-btn" id="shareBtnWrap">
+          <i class="fas fa-share-alt"></i> Share Profile
+          <div class="share-dropdown" id="shareDropdown">
+            <button class="share-opt" onclick="shareViaWA()">
+              <i class="fab fa-whatsapp" style="color:#25d366;"></i> WhatsApp
+            </button>
+            <button class="share-opt" onclick="copyLink()">
+              <i class="fas fa-link"></i> Copy Link
+            </button>
+            <button class="share-opt" onclick="shareViaEmail()">
+              <i class="fas fa-envelope"></i> Email
+            </button>
+            <button class="share-opt" onclick="nativeShare()">
+              <i class="fas fa-external-link-alt"></i> More…
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.hero-profile-strip -->
+  </div>
+
+  <!-- Wave divider -->
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 50" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,25 C480,50 960,0 1440,25 L1440,50 L0,50 Z" fill="#f4f8fc"/>
+    </svg>
+  </div>
+</section>
+
+<!-- Not-found state -->
+<div id="not-found">
+  <i class="fas fa-user-slash"></i>
+  <h2>Doctor Not Found</h2>
+  <p>We couldn't find a doctor matching the requested profile. Please go back and try again.</p>
+  <a href="index.html#doctors" class="btn btn-primary" style="margin-top:20px;">
+    <i class="fas fa-arrow-left"></i> Back to Our Doctors
+  </a>
+</div>
+
+<!-- ================================================================
+     MAIN CONTENT
+================================================================ -->
+<div class="doc-content-wrap" id="docContent">
+  <div class="container">
+    <div class="doc-grid">
+
+      <!-- ── LEFT COLUMN ── -->
+      <div id="docLeftCol">
+
+        <!-- About / Biography -->
+        <div class="doc-card" data-reveal>
+          <div class="doc-card-title">
+            <i class="fas fa-user-circle"></i>
+            About the Doctor
+          </div>
+          <div id="doc-bio-content"></div>
+        </div>
+
+        <!-- Professional Details -->
+        <div class="doc-card" data-reveal>
+          <div class="doc-card-title">
+            <i class="fas fa-id-badge"></i>
+            Professional Details
+          </div>
+          <div class="prof-grid" id="doc-prof-grid"></div>
+          <div style="margin-top:20px;">
+            <div class="section-label"><span>Education & Certifications</span></div>
+            <div class="cert-pills" id="doc-cert-pills"></div>
+          </div>
+          <div style="margin-top:20px;" id="doc-awards-wrap">
+            <div class="section-label"><span>Awards & Recognition</span></div>
+            <div class="cert-pills" id="doc-awards-pills"></div>
+          </div>
+        </div>
+
+        <!-- Availability -->
+        <div class="doc-card" data-reveal>
+          <div class="doc-card-title">
+            <i class="fas fa-clock"></i>
+            Availability / OPD Hours
+          </div>
+          <div class="avail-grid" id="doc-avail-grid"></div>
+          <div class="avail-note">
+            <i class="fas fa-info-circle"></i>
+            For emergency appointments, call
+            <a href="tel:+919462844444" style="color:var(--blue); font-weight:600; margin-left:4px;">
+              +91 94628 44444
+            </a> anytime.
+          </div>
+        </div>
+
+        <!-- Certificates Gallery -->
+        <div class="doc-card" data-reveal>
+          <div class="doc-card-title">
+            <i class="fas fa-certificate"></i>
+            Certificates & Qualifications
+          </div>
+          <div class="certs-gallery-grid" id="doc-certs-gallery"></div>
+        </div>
+
+      </div><!-- /#docLeftCol -->
+
+      <!-- ── RIGHT COLUMN: SIDEBAR ── -->
+      <aside class="doc-sidebar" id="docSidebar">
+
+        <!-- Appointment card -->
+        <div class="sidebar-card">
+          <div class="appt-card-header">
+            <h4>Book an Appointment</h4>
+            <p id="sidebar-doc-name">with this doctor</p>
+          </div>
+          <div class="appt-card-body">
+            <a href="#" id="sidebar-wa-btn" target="_blank" class="appt-btn-full">
+              <i class="fab fa-whatsapp"></i> WhatsApp Appointment
+            </a>
+            <a href="tel:+919462844444" class="appt-btn-call">
+              <i class="fas fa-phone-alt"></i> Call: +91 94628 44444
+            </a>
+          </div>
+        </div>
+
+        <!-- Rating card -->
+        <div class="sidebar-card">
+          <div class="rating-card-body">
+            <div class="rating-card-title">
+              <i class="fas fa-star"></i> Patient Ratings
+            </div>
+            <div class="rating-big">
+              <div class="rating-number" id="sidebar-rating-num">4.8</div>
+              <div class="rating-stars-col">
+                <div class="stars-row" id="sidebar-stars"></div>
+                <div class="rating-count" id="sidebar-rating-count"></div>
+              </div>
+            </div>
+            <div class="rating-bars" id="rating-bars"></div>
+          </div>
+        </div>
+
+        <!-- Info card -->
+        <div class="sidebar-card">
+          <div style="padding:20px 24px;">
+            <div class="doc-card-title" style="font-size:1rem; margin-bottom:12px;">
+              <i class="fas fa-info-circle"></i> Quick Info
+            </div>
+            <div id="sidebar-info-list"></div>
+          </div>
+        </div>
+
+      </aside><!-- /.doc-sidebar -->
+
+    </div><!-- /.doc-grid -->
+  </div>
+</div>
+
+<!-- ================================================================
+     DOCTOR NAVIGATION SWITCHER
+================================================================ -->
+<div class="doc-nav-section" id="docNavSection">
+  <div class="doc-nav-inner">
+    <div class="doc-nav-arrows">
+      <button class="doc-nav-arrow" id="prevDocBtn" onclick="navigateDoc(-1)">
+        <i class="fas fa-chevron-left"></i> Previous Doctor
+      </button>
+      <span class="doc-nav-counter" id="docNavCounter"></span>
+      <button class="doc-nav-arrow" id="nextDocBtn" onclick="navigateDoc(1)">
+        Next Doctor <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    <div class="doc-nav-label">
+      <i class="fas fa-users-cog"></i> Switch Doctor Profile
+    </div>
+    <div class="doc-thumbs-strip" id="docThumbsStrip"></div>
+  </div>
+</div>
+
+<!-- ================================================================
+     CERTIFICATE LIGHTBOX
+================================================================ -->
+<div id="cert-lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-content" onclick="event.stopPropagation()">
+    <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+    <div class="lightbox-tile" id="lightboxTile"></div>
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+</div>
+
+<!-- ================================================================
+     STICKY APPOINTMENT BUTTON (side edge)
+================================================================ -->
+<button id="sticky-appt" onclick="stickyApptClick()">
+  <i class="fas fa-calendar-check"></i>
+  Book Appointment
+</button>
+
+<!-- ================================================================
+     MINI FOOTER
+================================================================ -->
+<footer class="mini-footer">
+  <div class="mini-footer-inner">
+    <div class="mini-footer-brand">
+      <div class="mini-nav-logo-icon" style="width:32px;height:32px;font-size:.85rem;">
+        <i class="fas fa-heartbeat"></i>
+      </div>
+      <div>
+        <strong>KSC General & Dental Hospital</strong>
+        <span>10, Adarsh Nagar, Mandore, Jodhpur – 342304</span>
+      </div>
+    </div>
+    <div class="mini-footer-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#dental">Dental</a>
+      <a href="index.html#general">General</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="mini-footer-copy">
+      © 2024 KSC Hospital. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast"><i class="fas fa-check-circle"></i> <span id="toast-msg"></span></div>
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+
+/* ================================================================
+   STEP 5: DOCTOR DATA OBJECT
+   All doctor profiles stored here. Slug = URL param value.
+   Add more doctors by adding new keys to this object.
+================================================================ */
+const DOCTORS = {
+
+  /* ── Doctor 1 ── */
+  "kiran-sharma": {
+    name:        "Dr. Kiran Sharma",
+    qualification: "BDS, MDS – Prosthodontist & Implantologist",
+    department:  "Dental Department",
+    deptIcon:    "fa-tooth",
+    avatarGradient: "linear-gradient(145deg, #0a2540, #1a6dbc)",
+    speciality:  "Prosthodontics & Implantology",
+    experience:  "10+ Years",
+    patients:    "500+ Implants Done",
+    languages:   "Hindi, English, Rajasthani",
+    rating:      4.9,
+    reviewCount: 128,
+    ratingBars:  [5, 90, 4, 6, 3, 2, 2, 1, 1, 1], /* [star, pct, star, pct, …] */
+    stats: [
+      { icon: "fa-star",        label: "10+ Yrs Experience" },
+      { icon: "fa-tooth",       label: "500+ Implants" },
+      { icon: "fa-certificate", label: "MDS Certified" },
+      { icon: "fa-smile",       label: "Painless Treatment" }
+    ],
+    bio: [
+      "Dr. Kiran Sharma is a highly accomplished Prosthodontist and Implantologist with over a decade of dedicated clinical practice. She completed her BDS and MDS from prestigious dental institutions in Rajasthan and has since built an outstanding reputation for delivering pain-free, aesthetically excellent dental care.",
+      "Her specialisation in full-mouth rehabilitation, ceramic crowns, and titanium implant surgery has transformed the smiles and confidence of over 500 patients at KSC Hospital. She is deeply committed to patient education and uses digital imaging to explain treatment plans clearly, ensuring every patient feels informed and comfortable.",
+      "Dr. Kiran is also a certified Laser Dentistry practitioner and regularly attends national dental conferences to stay abreast of the latest advances in the field."
+    ],
+    profDetails: [
+      { label: "Speciality",    value: "Prosthodontics & Implantology" },
+      { label: "Experience",    value: "10+ Years" },
+      { label: "Consultation",  value: "₹300 – ₹500" },
+      { label: "Procedures",    value: "500+ Completed" },
+      { label: "Department",    value: "Dental OPD" },
+      { label: "Languages",     value: "Hindi, English" }
+    ],
+    education: [
+      { label: "BDS – Rajasthan University",          icon: "fa-graduation-cap" },
+      { label: "MDS Prosthodontics",                  icon: "fa-university" },
+      { label: "Laser Dentistry Certification",        icon: "fa-certificate" },
+      { label: "Implantology Advanced Training",       icon: "fa-award" }
+    ],
+    awards: [
+      { label: "Best Dental Surgeon – Jodhpur 2022",  icon: "fa-trophy" },
+      { label: "Excellence in Patient Care 2021",      icon: "fa-medal" }
+    ],
+    availability: [
+      { day: "Monday – Saturday", time: "4:00 PM – 8:00 PM" },
+      { day: "Sunday",            time: "10:00 AM – 1:00 PM" }
+    ],
+    certificates: [
+      { label: "BDS Degree",               icon: "fa-scroll",           bg: "linear-gradient(135deg,#1a6dbc,#2897d4)" },
+      { label: "MDS Certificate",          icon: "fa-certificate",      bg: "linear-gradient(135deg,#0fbfa1,#0a8a74)" },
+      { label: "Laser Dentistry",          icon: "fa-radiation",        bg: "linear-gradient(135deg,#8b5cf6,#6d28d9)" },
+      { label: "Implant Training",         icon: "fa-bone",             bg: "linear-gradient(135deg,#f59e0b,#d97706)" },
+      { label: "Ayushman Panel Cert",      icon: "fa-award",            bg: "linear-gradient(135deg,#10b981,#065f46)" },
+      { label: "CME – 2023",               icon: "fa-graduation-cap",   bg: "linear-gradient(135deg,#0a2540,#0d3561)" }
+    ],
+    waMsg: "I'd like to book an appointment with Dr. Kiran Sharma (Dental)"
+  },
+
+  /* ── Doctor 2 ── */
+  "sunil-choudhary": {
+    name:        "Dr. Sunil Choudhary",
+    qualification: "MBBS, MD – General Physician",
+    department:  "General Medicine",
+    deptIcon:    "fa-stethoscope",
+    avatarGradient: "linear-gradient(145deg, #0fbfa1, #0a4d7a)",
+    speciality:  "Internal Medicine & Diabetes Care",
+    experience:  "12+ Years",
+    patients:    "3000+ Patients Treated",
+    languages:   "Hindi, English, Marwari",
+    rating:      4.8,
+    reviewCount: 214,
+    ratingBars:  [5, 82, 4, 12, 3, 4, 2, 1, 1, 1],
+    stats: [
+      { icon: "fa-star",         label: "12+ Yrs Experience" },
+      { icon: "fa-users",        label: "3000+ Patients" },
+      { icon: "fa-heartbeat",    label: "Diabetes Specialist" },
+      { icon: "fa-shield-virus", label: "Preventive Care" }
+    ],
+    bio: [
+      "Dr. Sunil Choudhary is a highly respected General Physician with 12+ years of comprehensive clinical experience in internal medicine. He obtained his MBBS and MD from distinguished medical colleges and has served patients across Mandore and greater Jodhpur with tireless dedication.",
+      "His expertise spans the diagnosis and management of fever, respiratory infections, hypertension, type-2 diabetes, and thyroid disorders. He is widely known for his patient-friendly demeanour — taking the time to listen carefully before crafting personalised treatment plans.",
+      "Dr. Sunil is an empanelled physician under the Ayushman Bharat PM-JAY scheme and has a special interest in preventive healthcare, regularly conducting free health camps in the Mandore area."
+    ],
+    profDetails: [
+      { label: "Speciality",    value: "Internal Medicine" },
+      { label: "Experience",    value: "12+ Years" },
+      { label: "Consultation",  value: "₹200 – ₹400" },
+      { label: "Patients",      value: "3000+ Treated" },
+      { label: "Department",    value: "General OPD" },
+      { label: "Languages",     value: "Hindi, English, Marwari" }
+    ],
+    education: [
+      { label: "MBBS – Dr. S.N. Medical College",    icon: "fa-graduation-cap" },
+      { label: "MD – Internal Medicine",              icon: "fa-university" },
+      { label: "Diabetes Management Certificate",    icon: "fa-certificate" },
+      { label: "Ayushman Panel Physician",           icon: "fa-shield-heart" }
+    ],
+    awards: [
+      { label: "Community Doctor of the Year 2023",  icon: "fa-trophy" },
+      { label: "Health Camp Initiative Award 2022",  icon: "fa-medal" }
+    ],
+    availability: [
+      { day: "Monday – Saturday", time: "4:00 PM – 8:00 PM" },
+      { day: "Sunday",            time: "10:00 AM – 1:00 PM" }
+    ],
+    certificates: [
+      { label: "MBBS Certificate",        icon: "fa-scroll",           bg: "linear-gradient(135deg,#0fbfa1,#0a8a74)" },
+      { label: "MD Degree",               icon: "fa-graduation-cap",   bg: "linear-gradient(135deg,#1a6dbc,#2897d4)" },
+      { label: "Diabetes Care Cert",      icon: "fa-syringe",          bg: "linear-gradient(135deg,#f59e0b,#d97706)" },
+      { label: "PM-JAY Empanelment",      icon: "fa-award",            bg: "linear-gradient(135deg,#10b981,#065f46)" },
+      { label: "CME – Cardiology",        icon: "fa-heart",            bg: "linear-gradient(135deg,#ef4444,#b91c1c)" },
+      { label: "CME – 2024",              icon: "fa-certificate",      bg: "linear-gradient(135deg,#0a2540,#0d3561)" }
+    ],
+    waMsg: "I'd like to book an appointment with Dr. Sunil Choudhary (General Medicine)"
+  },
+
+  /* ── Doctor 3 ── */
+  "priya-rathore": {
+    name:        "Dr. Priya Rathore",
+    qualification: "MBBS, MS (OBG) – Gynaecologist & Obstetrician",
+    department:  "OBGYN Department",
+    deptIcon:    "fa-baby-carriage",
+    avatarGradient: "linear-gradient(145deg, #7c3aed, #0a2540)",
+    speciality:  "Gynaecology & Obstetrics",
+    experience:  "8+ Years",
+    patients:    "500+ Safe Deliveries",
+    languages:   "Hindi, English",
+    rating:      4.9,
+    reviewCount: 176,
+    ratingBars:  [5, 88, 4, 8, 3, 2, 2, 1, 1, 1],
+    stats: [
+      { icon: "fa-star",        label: "8+ Yrs Experience" },
+      { icon: "fa-baby",        label: "500+ Deliveries" },
+      { icon: "fa-venus",       label: "Women's Health" },
+      { icon: "fa-microscope",  label: "Laparoscopy Expert" }
+    ],
+    bio: [
+      "Dr. Priya Rathore is a compassionate and skilled Gynaecologist and Obstetrician with 8+ years of experience in women's healthcare. Holding MBBS and MS (OBG) qualifications, she has overseen more than 500 safe deliveries — both normal and C-section — at KSC Hospital.",
+      "Her clinical focus includes high-risk pregnancy management, laparoscopic gynaecological procedures, PCOS/PCOD management, and comprehensive antenatal & postnatal care. She is known for her empathetic approach that makes even the most anxious patients feel safe and supported.",
+      "Dr. Priya is a strong advocate for women's health awareness and regularly organises educational sessions on reproductive health, family planning, and maternal nutrition within the local community."
+    ],
+    profDetails: [
+      { label: "Speciality",    value: "Gynaecology & Obstetrics" },
+      { label: "Experience",    value: "8+ Years" },
+      { label: "Consultation",  value: "₹300 – ₹500" },
+      { label: "Deliveries",    value: "500+ Safe" },
+      { label: "Department",    value: "OBGYN Ward" },
+      { label: "Languages",     value: "Hindi, English" }
+    ],
+    education: [
+      { label: "MBBS – RUHS College of Medical Sciences", icon: "fa-graduation-cap" },
+      { label: "MS Obstetrics & Gynaecology",              icon: "fa-university" },
+      { label: "Laparoscopy Surgical Training",             icon: "fa-certificate" },
+      { label: "High-Risk Pregnancy Management",            icon: "fa-baby" }
+    ],
+    awards: [
+      { label: "Best Obstetrician – Jodhpur 2023",         icon: "fa-trophy" },
+      { label: "Safe Motherhood Award 2022",                icon: "fa-medal" }
+    ],
+    availability: [
+      { day: "Monday – Saturday", time: "4:00 PM – 8:00 PM" },
+      { day: "Sunday",            time: "10:00 AM – 1:00 PM" }
+    ],
+    certificates: [
+      { label: "MBBS Degree",              icon: "fa-scroll",           bg: "linear-gradient(135deg,#7c3aed,#6d28d9)" },
+      { label: "MS OBG Certificate",       icon: "fa-graduation-cap",   bg: "linear-gradient(135deg,#0fbfa1,#0a8a74)" },
+      { label: "Laparoscopy Cert",         icon: "fa-certificate",      bg: "linear-gradient(135deg,#1a6dbc,#2897d4)" },
+      { label: "High-Risk Pregnancy",      icon: "fa-baby",             bg: "linear-gradient(135deg,#ec4899,#9d174d)" },
+      { label: "PM-JAY Empanelment",       icon: "fa-award",            bg: "linear-gradient(135deg,#10b981,#065f46)" },
+      { label: "Maternal Health CME",      icon: "fa-heart",            bg: "linear-gradient(135deg,#f59e0b,#d97706)" }
+    ],
+    waMsg: "I'd like to book an appointment with Dr. Priya Rathore (OBGYN)"
+  },
+
+  /* ── Doctor 4 ── */
+  "mahesh-vyas": {
+    name:        "Dr. Mahesh Vyas",
+    qualification: "MBBS, MS (General Surgery)",
+    department:  "Surgery Department",
+    deptIcon:    "fa-scalpel",
+    avatarGradient: "linear-gradient(145deg, #b45309, #0a2540)",
+    speciality:  "General & Laparoscopic Surgery",
+    experience:  "15+ Years",
+    patients:    "57+ Surgeries Performed",
+    languages:   "Hindi, English, Rajasthani",
+    rating:      4.7,
+    reviewCount: 94,
+    ratingBars:  [5, 78, 4, 14, 3, 5, 2, 2, 1, 1],
+    stats: [
+      { icon: "fa-star",       label: "15+ Yrs Experience" },
+      { icon: "fa-procedures", label: "57+ Surgeries" },
+      { icon: "fa-scalpel",    label: "Laparoscopic Expert" },
+      { icon: "fa-shield-alt", label: "Emergency Surgery" }
+    ],
+    bio: [
+      "Dr. Mahesh Vyas is the Head of Surgery at KSC General & Dental Hospital, bringing 15+ years of surgical expertise and a calm, decisive operating style that has earned the trust of patients and colleagues alike. He completed his MBBS and MS (General Surgery) from esteemed medical institutions.",
+      "He leads the surgical team in performing both minor and major procedures — including abdominal surgeries, laparoscopic operations, hernia repairs, and emergency surgeries. With 27+ minor and 30+ major surgeries successfully completed at KSC, Dr. Mahesh maintains an excellent post-operative outcome record.",
+      "He is committed to evidence-based surgical practice and minimal post-operative recovery times, and is empanelled under the Ayushman Bharat PM-JAY scheme to ensure surgical care is accessible to all."
+    ],
+    profDetails: [
+      { label: "Speciality",    value: "General & Laparoscopic Surgery" },
+      { label: "Experience",    value: "15+ Years" },
+      { label: "Consultation",  value: "₹300 – ₹500" },
+      { label: "Surgeries",     value: "57+ Completed" },
+      { label: "Department",    value: "Surgical Ward" },
+      { label: "Languages",     value: "Hindi, English, Rajasthani" }
+    ],
+    education: [
+      { label: "MBBS – S.P. Medical College",        icon: "fa-graduation-cap" },
+      { label: "MS General Surgery",                  icon: "fa-university" },
+      { label: "Laparoscopic Surgery Certification",  icon: "fa-certificate" },
+      { label: "Emergency Surgery Training",          icon: "fa-hospital-alt" }
+    ],
+    awards: [
+      { label: "Outstanding Surgeon Award 2023",      icon: "fa-trophy" },
+      { label: "Patient Safety Excellence 2021",      icon: "fa-medal" }
+    ],
+    availability: [
+      { day: "Monday – Saturday", time: "4:00 PM – 8:00 PM" },
+      { day: "Sunday",            time: "10:00 AM – 1:00 PM" }
+    ],
+    certificates: [
+      { label: "MBBS Certificate",        icon: "fa-scroll",           bg: "linear-gradient(135deg,#b45309,#92400e)" },
+      { label: "MS Surgery Degree",       icon: "fa-graduation-cap",   bg: "linear-gradient(135deg,#1a6dbc,#2897d4)" },
+      { label: "Laparoscopy Cert",        icon: "fa-certificate",      bg: "linear-gradient(135deg,#0fbfa1,#0a8a74)" },
+      { label: "Emergency Training",      icon: "fa-hospital-alt",     bg: "linear-gradient(135deg,#ef4444,#b91c1c)" },
+      { label: "PM-JAY Empanelment",      icon: "fa-award",            bg: "linear-gradient(135deg,#10b981,#065f46)" },
+      { label: "Surgical CME 2024",       icon: "fa-procedures",       bg: "linear-gradient(135deg,#0a2540,#0d3561)" }
+    ],
+    waMsg: "I'd like to book an appointment with Dr. Mahesh Vyas (Surgery)"
+  }
+
+}; /* END DOCTORS object */
+
+/* Ordered array of doctor slugs (controls prev/next navigation) */
+const DOCTOR_ORDER = ["kiran-sharma", "sunil-choudhary", "priya-rathore", "mahesh-vyas"];
+
+/* ================================================================
+   UTILITY: Read URL param ?doctor=slug
+================================================================ */
+function getDocSlug() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('doctor') || '';
+}
+
+/* ================================================================
+   UTILITY: Generate star HTML (filled, half, empty)
+================================================================ */
+function buildStars(rating) {
+  let html = '';
+  for (let i = 1; i <= 5; i++) {
+    if (rating >= i)             html += '<i class="fas fa-star"></i>';
+    else if (rating >= i - 0.5) html += '<i class="fas fa-star-half-alt"></i>';
+    else                         html += '<i class="far fa-star"></i>';
+  }
+  return html;
+}
+
+/* ================================================================
+   CORE: RENDER DOCTOR PROFILE
+   Populates every element in the DOM with doctor data.
+================================================================ */
+function renderDoctor(slug) {
+  const doc = DOCTORS[slug];
+
+  /* ── Undefined doctor → show error state ── */
+  if (!doc) {
+    document.getElementById('doc-hero').style.display = 'none';
+    document.getElementById('docContent').style.display = 'none';
+    document.getElementById('docNavSection').style.display = 'none';
+    document.getElementById('not-found').classList.add('show');
+    return;
+  }
+
+  /* ── Update SEO ── */
+  document.title = `${doc.name} – ${doc.speciality} | KSC Hospital Jodhpur`;
+  document.querySelector('meta[name="description"]').content =
+    `${doc.name} – ${doc.qualification}. ${doc.experience} experience at KSC General & Dental Hospital, Mandore, Jodhpur.`;
+
+  /* ================================================================
+     HERO SECTION
+  ================================================================ */
+  document.getElementById('hero-breadcrumb-name').textContent = doc.name;
+  document.getElementById('hero-name').textContent = doc.name;
+  document.getElementById('hero-qual').textContent = doc.qualification;
+  document.getElementById('hero-dept-text').textContent = doc.department;
+  document.getElementById('hero-avatar-dept').textContent = doc.department;
+
+  /* Avatar gradient + icon */
+  const avatar = document.getElementById('hero-avatar');
+  avatar.style.background = doc.avatarGradient;
+  document.getElementById('hero-avatar-icon').className = `fas ${doc.deptIcon}`;
+
+  /* Department badge icon */
+  document.querySelector('#hero-dept-badge i').className = `fas ${doc.deptIcon}`;
+
+  /* Stat pills */
+  const statsRow = document.getElementById('hero-stats-row');
+  statsRow.innerHTML = doc.stats.map(s =>
+    `<div class="hero-stat-pill"><i class="fas ${s.icon}"></i> ${s.label}</div>`
+  ).join('');
+
+  /* Star rating in hero */
+  document.getElementById('hero-stars').innerHTML = buildStars(doc.rating);
+  document.getElementById('hero-rating-text').textContent =
+    `${doc.rating} / 5 (${doc.reviewCount} reviews)`;
+
+  /* ================================================================
+     SIDEBAR
+  ================================================================ */
+  document.getElementById('sidebar-doc-name').textContent = `with ${doc.name}`;
+  document.getElementById('sidebar-wa-btn').href =
+    `https://wa.me/919462844444?text=${encodeURIComponent(doc.waMsg)}`;
+
+  /* Sidebar stars */
+  document.getElementById('sidebar-stars').innerHTML = buildStars(doc.rating);
+  document.getElementById('sidebar-rating-num').textContent = doc.rating.toFixed(1);
+  document.getElementById('sidebar-rating-count').textContent = `${doc.reviewCount} patient reviews`;
+
+  /* Rating bars — format: [star, pct, star, pct, …] */
+  const rbContainer = document.getElementById('rating-bars');
+  rbContainer.innerHTML = '';
+  for (let i = 0; i < doc.ratingBars.length; i += 2) {
+    const star = doc.ratingBars[i];
+    const pct  = doc.ratingBars[i+1];
+    rbContainer.innerHTML += `
+      <div class="rating-bar-row">
+        <span class="rb-label">${star}</span>
+        <i class="fas fa-star" style="color:var(--gold);font-size:.65rem;"></i>
+        <div class="rb-track"><div class="rb-fill" style="width:0%" data-width="${pct}%"></div></div>
+        <span class="rb-count">${pct}%</span>
+      </div>`;
+  }
+
+  /* Sidebar quick info list */
+  const infoList = document.getElementById('sidebar-info-list');
+  infoList.innerHTML = `
+    <div class="info-list-item">
+      <i class="fas fa-stethoscope"></i>
+      <div><strong>Speciality</strong><span>${doc.speciality}</span></div>
+    </div>
+    <div class="info-list-item">
+      <i class="fas fa-clock"></i>
+      <div><strong>Experience</strong><span>${doc.experience}</span></div>
+    </div>
+    <div class="info-list-item">
+      <i class="fas fa-users"></i>
+      <div><strong>Patients</strong><span>${doc.patients}</span></div>
+    </div>
+    <div class="info-list-item">
+      <i class="fas fa-language"></i>
+      <div><strong>Languages</strong><span>${doc.languages}</span></div>
+    </div>
+    <div class="info-list-item">
+      <i class="fas fa-map-marker-alt"></i>
+      <div><strong>Location</strong><span>Mandore, Jodhpur – 342304</span></div>
+    </div>`;
+
+  /* ================================================================
+     LEFT COLUMN: BIO
+  ================================================================ */
+  document.getElementById('doc-bio-content').innerHTML =
+    doc.bio.map(p => `<p class="doc-bio-text">${p}</p>`).join('');
+
+  /* ================================================================
+     LEFT COLUMN: PROFESSIONAL DETAILS
+  ================================================================ */
+  document.getElementById('doc-prof-grid').innerHTML =
+    doc.profDetails.map(d => `
+      <div class="prof-item">
+        <div class="prof-item-label">${d.label}</div>
+        <div class="prof-item-value">${d.value}</div>
+      </div>`).join('');
+
+  /* Education pills */
+  document.getElementById('doc-cert-pills').innerHTML =
+    doc.education.map(e =>
+      `<div class="cert-pill"><i class="fas ${e.icon}"></i>${e.label}</div>`
+    ).join('');
+
+  /* Awards pills */
+  if (doc.awards && doc.awards.length) {
+    document.getElementById('doc-awards-wrap').style.display = '';
+    document.getElementById('doc-awards-pills').innerHTML =
+      doc.awards.map(a =>
+        `<div class="cert-pill" style="background:rgba(245,166,35,.1);border-color:rgba(245,166,35,.3);color:#b7690b;">
+          <i class="fas ${a.icon}" style="color:var(--gold);"></i>${a.label}
+        </div>`
+      ).join('');
+  } else {
+    document.getElementById('doc-awards-wrap').style.display = 'none';
+  }
+
+  /* ================================================================
+     LEFT COLUMN: AVAILABILITY
+  ================================================================ */
+  document.getElementById('doc-avail-grid').innerHTML =
+    doc.availability.map(a => `
+      <div class="avail-item">
+        <div class="day">${a.day}</div>
+        <div class="time">${a.time}</div>
+      </div>`).join('');
+
+  /* ================================================================
+     LEFT COLUMN: CERTIFICATES GALLERY
+  ================================================================ */
+  const certGrid = document.getElementById('doc-certs-gallery');
+  certGrid.innerHTML = doc.certificates.map((c, idx) => `
+    <div class="cert-gallery-item" onclick="openLightbox(${idx}, '${slug}')">
+      <div class="cert-tile" style="background:${c.bg};">
+        <div class="cert-tile-overlay"></div>
+        <i class="fas ${c.icon}"></i>
+        <div class="cert-tile-label">${c.label}</div>
+      </div>
+      <div class="cert-zoom-icon"><i class="fas fa-search-plus"></i></div>
+    </div>`).join('');
+
+  /* ================================================================
+     STICKY APPOINTMENT BUTTON (update WA link)
+  ================================================================ */
+  document.getElementById('sticky-appt').setAttribute(
+    'data-wa', `https://wa.me/919462844444?text=${encodeURIComponent(doc.waMsg)}`
+  );
+
+  /* ================================================================
+     DOCTOR NAVIGATION SWITCHER
+  ================================================================ */
+  buildDocNavigation(slug);
+
+  /* ── Animate rating bars after short delay (visible when scrolled) ── */
+  setTimeout(animateRatingBars, 500);
+}
+
+/* ================================================================
+   RATING BARS ANIMATION
+================================================================ */
+function animateRatingBars() {
+  document.querySelectorAll('.rb-fill').forEach(bar => {
+    bar.style.width = bar.dataset.width;
+  });
+}
+
+/* ================================================================
+   CERTIFICATE LIGHTBOX
+================================================================ */
+let currentLightboxSlug = '';
+
+function openLightbox(idx, slug) {
+  currentLightboxSlug = slug;
+  const cert = DOCTORS[slug].certificates[idx];
+  const tile = document.getElementById('lightboxTile');
+  tile.style.background = cert.bg;
+  tile.innerHTML = `
+    <i class="fas ${cert.icon}" style="font-size:5rem;color:rgba(255,255,255,.9);"></i>
+    <div class="lightbox-tile-label">${cert.label}</div>`;
+  document.getElementById('lightboxCaption').textContent =
+    `${cert.label} — ${DOCTORS[slug].name}`;
+  document.getElementById('cert-lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(e) {
+  if (e && e.target !== document.getElementById('cert-lightbox') &&
+      e.type !== 'click') return;
+  document.getElementById('cert-lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
+});
+
+/* ================================================================
+   DOCTOR NAVIGATION SWITCHER
+   Builds prev/next arrows + thumbnail strip at bottom of page.
+================================================================ */
+function buildDocNavigation(activeSlug) {
+  const idx   = DOCTOR_ORDER.indexOf(activeSlug);
+  const total = DOCTOR_ORDER.length;
+
+  /* Counter */
+  document.getElementById('docNavCounter').textContent =
+    `${idx + 1} / ${total}`;
+
+  /* Prev / Next buttons */
+  const prevBtn = document.getElementById('prevDocBtn');
+  const nextBtn = document.getElementById('nextDocBtn');
+  prevBtn.disabled = idx === 0;
+  nextBtn.disabled = idx === total - 1;
+
+  if (idx > 0) {
+    const prev = DOCTORS[DOCTOR_ORDER[idx-1]];
+    prevBtn.innerHTML = `<i class="fas fa-chevron-left"></i> ${prev.name}`;
+  }
+  if (idx < total - 1) {
+    const next = DOCTORS[DOCTOR_ORDER[idx+1]];
+    nextBtn.innerHTML = `${next.name} <i class="fas fa-chevron-right"></i>`;
+  }
+
+  /* Thumbnail strip */
+  const strip = document.getElementById('docThumbsStrip');
+  strip.innerHTML = DOCTOR_ORDER.map(slug => {
+    const d = DOCTORS[slug];
+    const isActive = slug === activeSlug;
+    return `
+      <a class="doc-thumb ${isActive ? 'active' : ''}"
+         href="doctor-details.html?doctor=${slug}">
+        <div class="doc-thumb-avatar" style="background:${d.avatarGradient};">
+          <i class="fas ${d.deptIcon}"></i>
+        </div>
+        <div class="doc-thumb-name">${d.name}</div>
+        <div class="doc-thumb-spec">${d.speciality}</div>
+        ${isActive ? '<div class="doc-thumb-active-pill">Viewing</div>' : ''}
+      </a>`;
+  }).join('');
+}
+
+/* ── Navigate to prev/next doctor ── */
+function navigateDoc(direction) {
+  const slug  = getDocSlug();
+  const idx   = DOCTOR_ORDER.indexOf(slug);
+  const newIdx = idx + direction;
+  if (newIdx < 0 || newIdx >= DOCTOR_ORDER.length) return;
+  const newSlug = DOCTOR_ORDER[newIdx];
+  /* Smooth page transition */
+  document.body.style.opacity = '0';
+  document.body.style.transition = 'opacity .3s ease';
+  setTimeout(() => {
+    window.location.href = `doctor-details.html?doctor=${newSlug}`;
+  }, 280);
+}
+
+/* ================================================================
+   SHARE FUNCTIONALITY
+================================================================ */
+const shareBtnWrap = document.getElementById('shareBtnWrap');
+shareBtnWrap.addEventListener('click', function(e) {
+  e.stopPropagation();
+  this.classList.toggle('open');
+});
+document.addEventListener('click', () => shareBtnWrap.classList.remove('open'));
+
+function shareViaWA() {
+  const slug = getDocSlug();
+  const doc  = DOCTORS[slug];
+  if (!doc) return;
+  const text = encodeURIComponent(
+    `Check out ${doc.name} (${doc.speciality}) at KSC General & Dental Hospital, Jodhpur.\n` +
+    window.location.href
+  );
+  window.open(`https://wa.me/?text=${text}`, '_blank');
+  showToast('Shared via WhatsApp!');
+}
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href)
+    .then(() => showToast('Link copied to clipboard!'))
+    .catch(() => showToast('Could not copy. Please copy the URL manually.'));
+}
+function shareViaEmail() {
+  const slug = getDocSlug();
+  const doc  = DOCTORS[slug] || {};
+  const subj = encodeURIComponent(`Doctor Profile – ${doc.name || ''} | KSC Hospital`);
+  const body = encodeURIComponent(
+    `Hi,\n\nI wanted to share this doctor profile from KSC Hospital:\n\n${window.location.href}\n\nBest regards`
+  );
+  window.location.href = `mailto:?subject=${subj}&body=${body}`;
+}
+function nativeShare() {
+  const slug = getDocSlug();
+  const doc  = DOCTORS[slug] || {};
+  if (navigator.share) {
+    navigator.share({
+      title: `${doc.name} – KSC Hospital Jodhpur`,
+      text:  `${doc.name}, ${doc.qualification} at KSC Hospital`,
+      url:   window.location.href
+    }).catch(() => {});
+  } else {
+    copyLink();
+  }
+}
+
+/* ================================================================
+   STICKY APPOINTMENT BUTTON CLICK
+================================================================ */
+function stickyApptClick() {
+  const url = document.getElementById('sticky-appt').dataset.wa;
+  if (url) window.open(url, '_blank');
+}
+
+/* ================================================================
+   STICKY BUTTON VISIBILITY (show after scrolling 300px)
+================================================================ */
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('sticky-appt');
+  if (window.scrollY > 300) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+}, { passive: true });
+
+/* ================================================================
+   SCROLL-REVEAL (same IntersectionObserver as main site)
+================================================================ */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('revealed');
+      revealObs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+/* ================================================================
+   TOAST NOTIFICATION (same as main site)
+================================================================ */
+function showToast(msg, bg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  toast.style.background = bg || 'var(--teal)';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3200);
+}
+
+/* ================================================================
+   PAGE LOADER + INITIALISATION
+================================================================ */
+window.addEventListener('load', () => {
+  /* Hide loader */
+  setTimeout(() => {
+    document.getElementById('page-loader').classList.add('hidden');
+    /* Fade-in page body */
+    document.body.style.opacity = '1';
+    document.body.style.transition = 'opacity .4s ease';
+  }, 900);
+
+  /* Get slug from URL and render */
+  const slug = getDocSlug();
+  renderDoctor(slug);
+
+  /* Start reveal observers */
+  document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
+
+  /* Animate rating bars once visible */
+  const ratingSection = document.getElementById('rating-bars');
+  const ratingObs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) { animateRatingBars(); ratingObs.disconnect(); }
+  }, { threshold: 0.3 });
+  if (ratingSection) ratingObs.observe(ratingSection);
+});
+
+/* Start with body invisible for smooth fade-in */
+document.body.style.opacity = '0';
+
+</script>
+</body>
+</html>
