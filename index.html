@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chirag Shrimali — Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Floating glass navbar -->
+  <header class="nav-glass" id="site-header">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">Chirag<span class="dot">.</span></a>
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+        <a href="description.html">Description</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <button id="nav-toggle" class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main>
+    <section class="hero">
+      <div class="hero-left">
+        <h1 class="eyebrow">Hi, I'm <span class="name">Chirag Shrimali</span></h1>
+        <h2 class="title">Full-Stack Web Developer & Problem Solver</h2>
+        <p class="lead">
+          I design and build modern responsive web apps with a focus on clean UX, performant code, and delightful micro-interactions.
+        </p>
+
+        <div class="cta-row">
+          <a href="contact.html" class="btn primary">Work with Me</a>
+          <a href="#projects" class="btn ghost">My Work</a>
+        </div>
+
+        <div class="skills-pill">
+          <span>
+            <img src="assets/html_Logo.png" alt="Logo" style="width:40px;height:auto;">
+          </span>
+          <span>
+            <img src="assets/css3-logo.png" alt="Company Logo" style="width:30px;height:auto;">
+          </span><span>
+            <img src="assets/javascript-logo.webp" alt="Company Logo" style="width:40px;height:auto;">
+          </span>
+          <span>
+            <img src="assets/React-Logo.png" alt="Company Logo" style="width:60px;height:auto;">
+          </span>
+          <span>
+            <img src="assets/node_js_logo.png" alt="Company Logo" style="width:40px;height:auto;">
+          </span>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="glass-card hero-card">
+          <img src="assets/hero.jpg" alt="Chirag portrait" class="hero-img">
+          <div class="card-glow"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section projects">
+      <div class="section-header">
+        <h3>Selected Projects</h3>
+        <p>Small selection of work highlighting design, front-end and full stack skills.</p>
+      </div>
+
+      <div class="projects-grid">
+        <article class="project">
+          <img src="assets/project1_thumbnail.jpg" alt="Project 1" style="object-fit: cover;object-position:top;">
+          <div class="project-body">
+            <h4>Project One</h4>
+            <p>Responsive web app with real-time features and clean UI.</p>
+            <div class="project-tags"><span>Html</span><span>CSS</span><span>JavaScript</span><span>React</span><span>Node</span></div>
+          </div>
+        </article>
+
+        <article class="project">
+          <img src="assets/project2.jpg" alt="Project 2">
+          <div class="project-body">
+            <h4>Project Two</h4>
+            <p>Prototype built in 48 hours during a hackathon (MVP delivered).</p>
+            <div class="project-tags"><span>Design</span><span>API</span></div>
+          </div>
+        </article>
+
+        <article class="project">
+          <img src="assets/project3.jpg" alt="Project 3">
+          <div class="project-body">
+            <h4>Project Three</h4>
+            <p>Performance-focused frontend with accessible components.</p>
+            <div class="project-tags"><span>Accessibility</span><span>Performance</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="more-btn">
+        <a href="about.html" class="btn primary-outline">See more →</a>
+      </div>
+    </section>
+
+    <!-- Contact preview -->
+    <section class="section contact-preview">
+      <div class="contact-card glass-card">
+        <div>
+          <h3>Interested in working together?</h3>
+          <p>Let's build something great. I'm available for contract work and full-time roles.</p>
+        </div>
+        <div class="contact-actions">
+          <a href="contact.html" class="btn primary">Get in touch</a>
+          <a href="https://github.com/chiragshrimali007" target="_blank" rel="noopener" class="btn ghost">View GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>© <span id="year"></span> Chirag Shrimali — Crafted with ♥</p>
+      <div class="social">
+        <a href="#" aria-label="facebook"><i class="fa-brands fa-square-facebook"></i></a>
+        <a href="#" aria-label="x/twitter"><i class="fa-brands fa-square-x-twitter"></i></a>
+        <a href="#" aria-label="linkedin"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#" aria-label="github"><i class="fa-brands fa-square-github"></i></a>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About — Chirag</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="nav-glass">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">Chirag<span class="dot">.</span></a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="active">About</a>
+        <a href="description.html">Description</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <button id="nav-toggle-2" class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="about-hero section">
+      <div class="about-grid">
+        <div class="glass-card about-left">
+          <img src="assets/avatar.jpg" alt="Avatar" class="avatar">
+        </div>
+
+        <div class="about-right">
+          <h1>About Me</h1>
+          <p class="lead">I’m a detail-driven Full Stack Engineer who transforms concepts into scalable products. I have experience in rapid prototyping (Sparkathone, Ideathone), backend APIs, and modern frontends.</p>
+
+          <h3>What I do</h3>
+          <ul class="bullets">
+            <li>Build responsive web apps with modern patterns</li>
+            <li>Design APIs and backend systems (Node / Python)</li>
+            <li>Deliver prototypes and production-ready features fast</li>
+          </ul>
+
+          <div class="cta-row" style="margin-top:18px">
+            <a href="contact.html" class="btn primary">Work with me</a>
+            <a href="description.html" class="btn ghost">View resume</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section skills">
+      <div class="section-header">
+        <h3>Skills</h3>
+      </div>
+      <div class="skill-grid">
+        <div class="skill"><strong>Front-end</strong><p>HTML, CSS, JS, React</p></div>
+        <div class="skill"><strong>Back-end</strong><p>Node.js, Express, Python</p></div>
+        <div class="skill"><strong>Databases</strong><p>MongoDB, PostgreSQL</p></div>
+        <div class="skill"><strong>Tools</strong><p>Git, Docker, Vercel</p></div>
+        <div class="skill"><strong>Design</strong><p>Figma, Prototyping</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year-2"></span> Chirag — let’s build.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

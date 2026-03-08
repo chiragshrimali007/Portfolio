@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact — Chirag</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="nav-glass">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">Chirag<span class="dot">.</span></a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="description.html">Description</a>
+        <a href="contact.html" class="active">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section contact-section">
+      <div class="contact-grid">
+        <div class="glass-card contact-left">
+          <h2>Let's talk</h2>
+          <p>I'm available for freelance & full-time roles. Send a message and I'll respond within a few days.</p>
+
+          <ul class="contact-info">
+            <li><strong>Email</strong><span>chiragshrimali03@gmail.com</span></li>
+            <li><strong>LinkedIn</strong><span>Chirag Shrimali</span></li>
+            <li><strong>GitHub</strong><span>chiragshrimali007</span></li>
+          </ul>
+
+          <div class="social-row">
+            <a href="#" class="social"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="#" class="social"><i class="fa-brands fa-square-github"></i></a>
+          </div>
+        </div>
+
+        <form id="contact-form" class="glass-card contact-right" novalidate>
+          <h3>Message me</h3>
+
+          <label>
+            <span>Name</span>
+            <input type="text" name="name" id="name" required placeholder="Your name">
+          </label>
+
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" id="email" required placeholder="Your email">
+          </label>
+
+          <label>
+            <span>Message</span>
+            <textarea name="message" id="message" rows="6" required placeholder="Tell me about your project"></textarea>
+          </label>
+
+          <div class="form-actions">
+            <button type="submit" class="btn primary">Send Message</button>
+            <button type="reset" class="btn ghost">Reset</button>
+          </div>
+
+          <p class="form-note" id="form-note" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year-3"></span> Chirag — contact.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
